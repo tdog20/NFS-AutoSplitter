@@ -15,6 +15,8 @@ state("NFSC")
 
     //Displays if a race is finished (prevents splits when falling off the canyon)
     bool isFinished: 0x68A284;
+	
+	int loading: "NFSC.exe", 0x69970C, 0x0;
 }
 
 startup
@@ -59,7 +61,7 @@ split
 
 isLoading
 {
-    return vars.loadValues.Contains(current.menuShit);
+    return vars.loadValues.Contains(current.menuShit) || current.loading != 0;
 }
 
 start
