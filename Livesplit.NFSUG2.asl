@@ -33,7 +33,7 @@ state("SPEED2")
 
 startup
 {
-    settings.Add("Stage1EndSplit", false, "Splits when the finishing cutscene of Stage 1 is playing")
+    settings.Add("Stage1EndSplit", false, "Splits when the finishing cutscene of Stage 1 is playing");
 }
 
 start
