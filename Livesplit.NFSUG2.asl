@@ -17,7 +17,7 @@ state("SPEED2")
 
     // 1 = Inside a tuning shop
     // 0 = Not in a tuning shop
-    int inAShop : 0x438980;
+    bool inAShop : 0x438980;
 
     // 2 = Star Event
     // 0 = no Event
@@ -34,6 +34,7 @@ state("SPEED2")
 startup
 {
     settings.Add("Stage1EndSplit", false, "Splits when the finishing cutscene of Stage 1 is playing");
+    settings.Add("ShopSplit", false, "Splits when exiting shops");
 }
 
 start
@@ -53,6 +54,12 @@ split
     }
     else if(settings["Stage1EndSplit"]) {
         if(current.fmvName == "Scene07" && current.fmvPlaying && !old.fmvPlaying) {
+            return true;
+        }
+        return false;
+    }
+    else if(settings["ShopSplit"]) {
+        if(!current.inAShop && old.inAShop) {
             return true;
         }
         return false;
