@@ -1,6 +1,16 @@
-state("NeedForSpeedPayback")
+state("NeedForSpeedPayback", "Standard Origin Version")
 {
     bool loading: 0x038660D0, 0x88, 0x0, 0x20, 0x28, 0x28, 0x8, 0x3E8; //248813B0 better
+}
+
+init
+{
+    if(modules.First().ModuleMemorySize == 0xB09C000) {
+		version = "Standard Origin Version";
+	}
+    else {
+        MessageBox.Show("Version not supported!");
+    }
 }
 
 startup
