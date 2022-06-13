@@ -33,8 +33,8 @@ state("SPEED2")
 
 startup
 {
-    settings.Add("Stage1EndSplit", false, "Splits when the finishing cutscene of Stage 1 is playing");
-    settings.Add("ShopSplit", false, "Splits when exiting shops");
+    settings.Add("Stage1EndSplit", false, "Split when the finishing cutscene of Stage 1 is playing");
+    settings.Add("ShopSplit", false, "Split when exiting shops");
 }
 
 start
@@ -44,6 +44,22 @@ start
 
 split 
 {
+    //Split when the finishing cutscene of Stage 1 is playing
+    if(settings["Stage1EndSplit"]) {
+        if(current.fmvName == "Scene07" && current.fmvPlaying && !old.fmvPlaying) {
+            return true;
+        }
+        return false;
+    }
+
+    //Split when exiting a shop
+    if(settings["ShopSplit"]) {
+        if(!current.inAShop && old.inAShop) {
+            return true;
+        }
+        return false;
+    }
+
     //First Drive to the Car Lot
     if(current.fmvName == "SCENE05" && current.fmvPlaying && !old.fmvPlaying){
         return true;
@@ -51,18 +67,6 @@ split
     //First Drive to the Garage
     else if(current.fmvName == "SCENE06" && current.fmvPlaying && !old.fmvPlaying) {
         return true;
-    }
-    else if(settings["Stage1EndSplit"]) {
-        if(current.fmvName == "Scene07" && current.fmvPlaying && !old.fmvPlaying) {
-            return true;
-        }
-        return false;
-    }
-    else if(settings["ShopSplit"]) {
-        if(!current.inAShop && old.inAShop) {
-            return true;
-        }
-        return false;
     }
     // Split for normal races
     else if(current.raceState == 3 && old.raceState == 1) {
